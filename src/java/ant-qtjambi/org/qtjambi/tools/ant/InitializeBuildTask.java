@@ -1525,6 +1525,10 @@ public class InitializeBuildTask extends AbstractInitializeTask {
                 generatorPreProcStageOneList.add("-D_MSC_VER=1600");
             } else if(Compiler.isCompiler(compilerString, Compiler.MSVC2012, Compiler.MSVC2012_64)) {
                 generatorPreProcStageOneList.add("-D_MSC_VER=1700");
+            } else if(Compiler.isCompiler(compilerString, Compiler.MSVC2013, Compiler.MSVC2013_64)) {
+                generatorPreProcStageOneList.add("-D_MSC_VER=1800");
+            } else if(Compiler.isCompiler(compilerString, Compiler.MSVC2015, Compiler.MSVC2015_64)) {
+                generatorPreProcStageOneList.add("-D_MSC_VER=1900");
             } else if(Compiler.isCompiler(compilerString, Compiler.GCC, Compiler.OldGCC, Compiler.MinGW, Compiler.MinGW_W64)) {
                 generatorPreProcStageOneList.add("-D__GNUC__" + gccVersionMajor);
             }
