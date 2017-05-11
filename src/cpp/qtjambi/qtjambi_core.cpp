@@ -327,6 +327,13 @@ JNIEnv *qtjambi_current_environment()
     } else {
         Q_ASSERT(result == JNI_OK);
     }
+
+	// Avoid invalid JNI after JVM halt.
+	// JAVA 8 tends to return a JNI interface with a null function pointer table.
+	if (env == 0 || env->functions == 0) {
+		return 0;
+	}
+
     return env;
 }
 
@@ -1583,7 +1590,7 @@ bool qtjambi_connect_cpp_to_java(JNIEnv *,
      * QObject::connect() and QObject::disconnect().
      * Here, we have to do it manual. The Question is: How will this connection later get disconnected?
      */
-    bool success_in_callback = qtjambi_connect_callback(&cbdata, false);
+    bool success_in_callback = qtjambi_connect_callback(reinterpret_cast<void**>(&cbdata), false);
     QMetaObject::Connection native_connection = sender->connect(sender, cpp_signal_name.toLatin1().constData(),
                              wrapper, cpp_slot_name.toLatin1().constData());
     if (!success_in_callback && !native_connection) {
