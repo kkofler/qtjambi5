@@ -554,11 +554,7 @@
     <object-type name="QEnterEvent" polymorphic-id-expression="%1-&gt;type() == QEvent::Enter"/>
     <object-type name="QExposeEvent" polymorphic-id-expression="%1-&gt;type() == QEvent::Expose"/>
     <object-type name="QFileOpenEvent" polymorphic-id-expression="%1-&gt;type() == QEvent::FileOpen"/>
-    <object-type name="QFocusEvent" polymorphic-id-expression="%1-&gt;type() == QEvent::FocusIn || %1-&gt;type() == QEvent::FocusOut">
-		<modify-function signature="reason()const">
-			<remove/>
-		</modify-function>
-    </object-type>
+    <object-type name="QFocusEvent" polymorphic-id-expression="%1-&gt;type() == QEvent::FocusIn || %1-&gt;type() == QEvent::FocusOut"/>
     <object-type name="QHelpEvent" polymorphic-id-expression="%1-&gt;type() == QEvent::ToolTip || %1-&gt;type() == QEvent::WhatsThis"/>
     <object-type name="QHideEvent" polymorphic-id-expression="%1-&gt;type() == QEvent::Hide"/>
     <object-type name="QHoverEvent" polymorphic-id-expression="%1-&gt;type() == QEvent::HoverEnter || %1-&gt;type() == QEvent::HoverLeave || %1-&gt;type() == QEvent::HoverMove"/>
@@ -798,18 +794,13 @@
         <modify-function signature="QImage(const char * const*)">
             <access modifier="private"/>
         </modify-function>
-        <modify-function signature="bits()">
+        <modify-function signature="bits()const">
             <remove/>
-        </modify-function>
-        <modify-function signature="bits()const" access="private">
         </modify-function>
         <modify-function signature="constBits()const">
             <remove/>
         </modify-function>
         <modify-function signature="scanLine(int)const">
-            <remove/>
-        </modify-function>
-        <modify-function signature="scanLine(int)">
             <remove/>
         </modify-function>
         <modify-function signature="constScanLine(int)const">
