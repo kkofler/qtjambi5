@@ -91,7 +91,7 @@ public:
         d_func()->running = true;
         d_func()->finished = false;
 #ifdef Q_OS_UNIX
-        d_func()->thread_id = pthread_self();
+        d_func()->data->threadId = pthread_self();
 #endif // Q_OS_UNIX
 
 #ifdef Q_OS_WIN
@@ -1038,5 +1038,3 @@ QTJAMBI_FUNCTION_PREFIX(Java_org_qtjambi_qt_internal_HelperFunctions_setAsMainTh
 
     callFunction(SetCurrentThreadToMainThread, 0);
 }
-
-
