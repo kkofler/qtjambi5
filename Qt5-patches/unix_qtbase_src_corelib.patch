@@ -1,11 +1,36 @@
---- qtbase/src/corelib/kernel/qobject.cpp	2015-06-29 23:04:58.000000000 +0200
-+++ qtbase/src/corelib/kernel/qobject.cpp	2015-08-20 15:54:31.490618100 +0200
-@@ -2623,6 +2623,98 @@
+diff --git a/qtbase/src/corelib/global/qnamespace.h b/qtbase/src/corelib/global/qnamespace.h
+index 4d0bd69..98ed750 100644
+--- a/qtbase/src/corelib/global/qnamespace.h
++++ b/qtbase/src/corelib/global/qnamespace.h
+@@ -1794,8 +1794,17 @@ public:
+         DockCount
+     };
+ 
++/**Required by QtJambi 5**/
++#define QT_QTJAMBI_PORT
++/*************************/
++
+     enum Callback {
+         EventNotifyCallback,
++        /**Required by QtJambi 5**/
++        ConnectCallback,
++        DisconnectCallback,
++        AdoptCurrentThread,
++        /*************************/
+         LastCallback
+     };
+     static bool registerCallback(Callback, qInternalCallback);
+diff --git a/qtbase/src/corelib/kernel/qobject.cpp b/qtbase/src/corelib/kernel/qobject.cpp
+index 467b4c6..20a231f 100644
+--- a/qtbase/src/corelib/kernel/qobject.cpp
++++ b/qtbase/src/corelib/kernel/qobject.cpp
+@@ -2635,6 +2635,101 @@ QMetaObject::Connection QObject::connect(const QObject *sender, const char *sign
                   (method && *method) ? method+1 : "(null)");
          return QMetaObject::Connection(0);
      }
-+	
-+	/** recovered from Qt4 for QtJambi5 **/{
++
++    /** Start recovered from Qt4 for QtJambi5 **/
++    {
 +        const void *cbdata[] = { sender, signal, receiver, method, &type};
 +        if(QInternal::activateCallbacks(QInternal::ConnectCallback, (void **) cbdata)){
 +            QByteArray tmp_signal_name;
@@ -96,15 +121,17 @@
 +            return QMetaObject::Connection(c.take());
 +        }
 +    }
++    /** End recovered from Qt4 for QtJambi5 **/
++
      QByteArray tmp_signal_name;
  
      if (!check_signal_macro(sender, signal, "connect", "bind"))
-@@ -2764,6 +2856,40 @@
-                  method.methodSignature().constData() );
+@@ -2777,6 +2872,42 @@ QMetaObject::Connection QObject::connect(const QObject *sender, const QMetaMetho
          return QMetaObject::Connection(0);
      }
-+	
-+    /** recovered from Qt4 for QtJambi5 **/{
+ 
++    /** Start recovered from Qt4 for QtJambi5 **/
++    {
 +        QByteArray methodSignature;
 +		if(method.isValid()){
 +			methodSignature.reserve(qstrlen(method.methodSignature())+1);
@@ -137,15 +164,17 @@
 +			return QMetaObject::Connection(c.take());
 +        }
 +    }
- 
++    /** End recovered from Qt4 for QtJambi5 **/
++
      int signal_index;
      int method_index;
-@@ -2890,6 +3016,39 @@
-         qWarning("QObject::disconnect: Unexpected null parameter");
+     {
+@@ -2903,6 +3034,41 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
          return false;
      }
-+	
-+    /** recovered from Qt4 for QtJambi5 **/{
+ 
++    /** Start recovered from Qt4 for QtJambi5 **/
++    {
 +        const void *cbdata[] = { sender, signal, receiver, method };
 +        if (QInternal::activateCallbacks(QInternal::DisconnectCallback, (void **) cbdata)){
 +
@@ -177,14 +206,17 @@
 +            return true;
 +        }
 +    }
- 
++    /** End recovered from Qt4 for QtJambi5 **/
++
      const char *signal_arg = signal;
      QByteArray signal_name;
-@@ -3049,6 +3208,21 @@
+     bool signal_found = false;
+@@ -3061,6 +3227,23 @@ bool QObject::disconnect(const QObject *sender, const QMetaMethod &signal,
          signalSignature.append(signal.methodSignature());
      }
  
-+    /** recovered from Qt4 for QtJambi5 **/{
++    /** Start recovered from Qt4 for QtJambi5 **/
++    {
 +        QByteArray methodSignature;
 +        if (method.isValid()) {
 +            methodSignature.reserve(method.methodSignature().size()+1);
@@ -198,37 +230,27 @@
 +            return true;
 +        }
 +    }
++    /** End recovered from Qt4 for QtJambi5 **/
 +
      int signal_index;
      int method_index;
      {
-@@ -3267,7 +3441,7 @@
-     c->callFunction = callFunction;
- 
-     QObjectPrivate::get(s)->addConnection(signal_index, c.data());
--
-+    
-     locker.unlock();
-     QMetaMethod smethod = QMetaObjectPrivate::signal(smeta, signal_index);
-     if (smethod.isValid())
-@@ -3378,7 +3552,11 @@
+@@ -3390,6 +3573,10 @@ bool QMetaObjectPrivate::disconnect(const QObject *sender,
      // prevent incoming connections changing the connectionLists while unlocked
      ++connectionLists->inUse;
  
--    bool success = false;
-+	/** recovered from Qt4 for QtJambi5 **/
-+	
++    /** Start recovered from Qt4 for QtJambi5 **/
 +	QMetaMethod smethod = QMetaObjectPrivate::signal(smeta, signal_index);
-+	bool success = false;
++    /** End recovered from Qt4 for QtJambi5 **/
 +
+     bool success = false;
      if (signal_index < 0) {
          // remove from all connection lists
-         for (int sig_index = -1; sig_index < connectionLists->count(); ++sig_index) {
-@@ -4723,6 +4901,37 @@
+@@ -4735,6 +4922,38 @@ bool QObject::disconnect(const QMetaObject::Connection &connection)
  {
      QObjectPrivate::Connection *c = static_cast<QObjectPrivate::Connection *>(connection.d_ptr);
  
-+    /** recovered from Qt4 for QtJambi5 **/
++    /** Start recovered from Qt4 for QtJambi5 **/
 +    if(c && c->sender){
 +        QMetaMethod signal;
 +        QByteArray signalSignature;
@@ -258,7 +280,107 @@
 +            return true;
 +        }
 +    }
++    /** End recovered from Qt4 for QtJambi5 **/
 +
      if (!c || !c->receiver)
          return false;
+ 
+diff --git a/qtbase/src/corelib/thread/qthread_unix.cpp b/qtbase/src/corelib/thread/qthread_unix.cpp
+index 8c35d49..d10b5b7 100644
+--- a/qtbase/src/corelib/thread/qthread_unix.cpp
++++ b/qtbase/src/corelib/thread/qthread_unix.cpp
+@@ -238,17 +238,32 @@ QThreadData *QThreadData::current(bool createIfNecessary)
+ {
+     QThreadData *data = get_thread_data();
+     if (!data && createIfNecessary) {
+-        data = new QThreadData;
+-        QT_TRY {
++        /** Start recovered from Qt4 for QtJambi5 **/
++        void *a;
++        if (QInternal::activateCallbacks(QInternal::AdoptCurrentThread, &a)) {
++            QThread *adopted = static_cast<QThread*>(a);
++            Q_ASSERT(adopted);
++            data = QThreadData::get2(adopted);
+             set_thread_data(data);
+-            data->thread = new QAdoptedThread(data);
+-        } QT_CATCH(...) {
+-            clear_thread_data();
++            adopted->d_func()->running = true;
++            adopted->d_func()->finished = false;
++            static_cast<QAdoptedThread *>(adopted)->init();
++        } else {
++        /** End recovered from Qt4 for QtJambi5 **/
++            data = new QThreadData;
++            QT_TRY {
++                set_thread_data(data);
++                data->thread = new QAdoptedThread(data);
++            } QT_CATCH(...) {
++                clear_thread_data();
++                data->deref();
++                data = 0;
++                QT_RETHROW;
++            }
+             data->deref();
+-            data = 0;
+-            QT_RETHROW;
++        /** Start recovered from Qt4 for QtJambi5 **/
+         }
+-        data->deref();
++        /** End recovered from Qt4 for QtJambi5 **/
+         data->isAdopted = true;
+         data->threadId = to_HANDLE(pthread_self());
+         if (!QCoreApplicationPrivate::theMainThread)
+@@ -760,4 +775,3 @@ void QThreadPrivate::setPriority(QThread::Priority threadPriority)
+ #endif // QT_NO_THREAD
+ 
+ QT_END_NAMESPACE
+-
+diff --git a/qtbase/src/corelib/thread/qthread_win.cpp b/qtbase/src/corelib/thread/qthread_win.cpp
+index 6df85d8..55c0048 100644
+--- a/qtbase/src/corelib/thread/qthread_win.cpp
++++ b/qtbase/src/corelib/thread/qthread_win.cpp
+@@ -122,19 +122,33 @@ QThreadData *QThreadData::current(bool createIfNecessary)
+     qt_create_tls();
+     QThreadData *threadData = reinterpret_cast<QThreadData *>(TlsGetValue(qt_current_thread_data_tls_index));
+     if (!threadData && createIfNecessary) {
+-        threadData = new QThreadData;
+-        // This needs to be called prior to new AdoptedThread() to
+-        // avoid recursion.
+-        TlsSetValue(qt_current_thread_data_tls_index, threadData);
+-        QT_TRY {
+-            threadData->thread = new QAdoptedThread(threadData);
+-        } QT_CATCH(...) {
+-            TlsSetValue(qt_current_thread_data_tls_index, 0);
++        /** Start recovered from Qt4 for QtJambi5 **/
++        QThread *adopted = 0;
++        if (QInternal::activateCallbacks(QInternal::AdoptCurrentThread, (void **) &adopted)) {
++            Q_ASSERT(adopted);
++            threadData = QThreadData::get2(adopted);
++            TlsSetValue(qt_current_thread_data_tls_index, threadData);
++            adopted->d_func()->running = true;
++            adopted->d_func()->finished = false;
++            static_cast<QAdoptedThread *>(adopted)->init();
++        } else {
++        /** End recovered from Qt4 for QtJambi5 **/
++            threadData = new QThreadData;
++            // This needs to be called prior to new AdoptedThread() to
++            // avoid recursion.
++            TlsSetValue(qt_current_thread_data_tls_index, threadData);
++            QT_TRY {
++                threadData->thread = new QAdoptedThread(threadData);
++            } QT_CATCH(...) {
++                TlsSetValue(qt_current_thread_data_tls_index, 0);
++                threadData->deref();
++                threadData = 0;
++                QT_RETHROW;
++            }
+             threadData->deref();
+-            threadData = 0;
+-            QT_RETHROW;
++        /** Start recovered from Qt4 for QtJambi5 **/
+         }
+-        threadData->deref();
++        /** End recovered from Qt4 for QtJambi5 **/
+         threadData->isAdopted = true;
+         threadData->threadId = reinterpret_cast<Qt::HANDLE>(quintptr(GetCurrentThreadId()));
  
