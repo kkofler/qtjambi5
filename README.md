@@ -27,10 +27,14 @@ Modify qt source to re-add jambi support.  There are patch files in the jambi
 directory that need to be applied.  There are unix and windows flavours, I
 believe they only differ in the line endings.
 
-`~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_global_qnamespace.h.patch`
-`~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_kernel_qobject.cpp.patch`
-`~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_thread_qthread_unix.cpp.patch`
-`~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_thread_qthread_win.cpp.patch`
+```
+#!sh
+
+~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_global_qnamespace.h.patch
+~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_kernel_qobject.cpp.patch
+~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_thread_qthread_unix.cpp.patch
+~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_thread_qthread_win.cpp.patch
+```
 
 Make a build directory outside the qt source directory to avoid polluting the source
 if something goes wrong.
