@@ -50,7 +50,7 @@ class Node;
 
 struct JObject_key {
     jobject obj;
-    uint hashCode;
+    int hashCode;
 };
 
 uint qHash(const JObject_key &key);
