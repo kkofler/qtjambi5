@@ -183,29 +183,12 @@ inline int qHash(const QImage &image)
 
 inline int qHash(const QPen &pen)
 {
-    int hashCode = int(pen.style()); 
+    int hashCode = int(pen.style());
     hashCode = hashCode * 31 + int(pen.capStyle());
     hashCode = hashCode * 31 + int(pen.joinStyle());
     hashCode = hashCode * 31 + pen.width();
     hashCode = hashCode * 31 + qHash(pen.brush());
     hashCode = hashCode * 31 + int(pen.isCosmetic());
-    return hashCode;
-}
-
-inline int qHash(const QTransform &transform)
-{
-    int hashCode = int(transform.m11());
-    hashCode = hashCode * 31 + int(transform.m12());
-    hashCode = hashCode * 31 + int(transform.m13());
-
-    hashCode = hashCode * 31 + int(transform.m21());
-    hashCode = hashCode * 31 + int(transform.m22());
-    hashCode = hashCode * 31 + int(transform.m23());
-
-    hashCode = hashCode * 31 + int(transform.m31());
-    hashCode = hashCode * 31 + int(transform.m32());
-    hashCode = hashCode * 31 + int(transform.m33());
-
     return hashCode;
 }
 
