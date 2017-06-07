@@ -52,6 +52,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QDir>
 #include <QtCore/QEvent>
+#include <QtCore/QProcess>
 #include <QtCore/QFileInfo>
 #include <QtCore/QLibrary>
 #include <QtCore/QMetaMethod>
@@ -73,7 +74,7 @@
 #if defined(QTJAMBI_DEBUG_TOOLS)
  #include "qtjambidebugevent_p.h"
 #endif
-            
+
 static QStringList locate_vm();
 
 typedef jint (JNICALL *PtrGetDefaultJavaVMInitArgs)(void *);
@@ -2114,7 +2115,7 @@ bool qtjambi_initialize_vm(const QStringList & vm_parameters, const bool ignoreU
     }
 
     JavaVMInitArgs vm_args;
-    vm_args.version = JNI_VERSION_1_8;
+    vm_args.version = 0x00010008;
     if(ignoreUnrecognizedOptions){
         vm_args.ignoreUnrecognized = JNI_TRUE;
     }else{
@@ -3010,7 +3011,7 @@ void qtjambi_register_callbacks()
                        reinterpret_cast<QMetaType::LoadOperator>(jobjectwrapper_load));
 }
 
-void qtjambi_unregister_callbacks() 
+void qtjambi_unregister_callbacks()
 {
 #if QT_VERSION < 0x050000
     {
@@ -3319,4 +3320,3 @@ jobject qtjambi_invoke_method(JNIEnv *env,
         return 0;
     };
 }
-
