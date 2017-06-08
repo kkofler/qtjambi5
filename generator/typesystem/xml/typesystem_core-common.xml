@@ -50,7 +50,7 @@
     <rejection class="QLocale" function-name="d"/>
 
     <rejection class="Qt" enum-name="Modifier" />
-	
+
 	<rejection class="QAssociativeIterable" />
 	<rejection class="QAtomicInteger" />
 	<rejection class="QEnableSharedFromThis" />
@@ -452,7 +452,9 @@
     <enum-type name="Qt::FocusReason"/>
     <enum-type name="Qt::GlobalColor"/>
     <enum-type name="Qt::HitTestAccuracy"/>
-    <enum-type name="Qt::ItemFlag" flags="Qt::ItemFlags"/>
+    <enum-type name="Qt::ItemFlag" flags="Qt::ItemFlags">
+        <reject-enum-value name="ItemIsTristate"/>
+    </enum-type>
     <enum-type name="Qt::ItemSelectionMode"/>
     <enum-type name="Qt::KeyboardModifier" flags="Qt::KeyboardModifiers"/>
     <enum-type name="Qt::LayoutDirection"/>
@@ -495,7 +497,7 @@
     <enum-type name="QStandardPaths::StandardLocation">
 		<reject-enum-value name="AppLocalDataLocation"/>
     </enum-type>
-	
+
     <enum-type name="Qt::AlignmentFlag" flags="Qt::Alignment">
         <reject-enum-value name="AlignLeading"/>
         <reject-enum-value name="AlignTrailing"/>
@@ -630,7 +632,7 @@
     </enum-type>
     <enum-type name="QTimeZone::TimeType"/>
     <enum-type name="QTimeZone::NameType"/>
-	
+
 	<enum-type name="QAbstractTransition::TransitionType"/>
 ^
 <!-- This is a work-around because some Qt code uses QFile::FileError instead of QFileDevice::FileError -->
@@ -639,7 +641,7 @@
     <!--primitive-type name="QFile::MemoryMapFlags" java-name="QFileDevice.MemoryMapFlags" jni-name="QFile::MemoryMapFlags"/-->
 <!-- This is a work-around because some Qt code uses QFile::Permissions instead of QFileDevice::Permissions -->
     <!--primitive-type name="QFile::Permissions" java-name="QFileDevice.Permissions" jni-name="QFile::Permissions"/-->
-    
+
     <value-type name="QLine"/>
     <value-type name="QLineF"/>
 
@@ -882,11 +884,11 @@
     </value-type>
     <value-type name="QTimeZone::OffsetData"/>
     <!--value-type name="QMessageLogContext"/-->
-    
+
 	<object-type name="QStandardPaths"/>
 	<!--object-type name="QWinEventNotifier"/-->
 	<object-type name="QSaveFile"/>
-	
+
     <!--object-type name="QMessageLogger">
         <modify-function signature="debug()const" remove="all">
         </modify-function>
@@ -1143,7 +1145,7 @@
         <modify-function signature="filterChanged()" remove="all"/> <!--### Obsolete in 4.3-->
     </object-type>
 
-  
+
   <object-type name="QIdentityProxyModel">
 	<!--modify-function signature="parent()const" remove="all"/-->
     <extra-includes>
@@ -1934,13 +1936,13 @@
 	}
     </custom-creator>
     </value-type>
-	
+
 	<value-type name="QStorageInfo">
 		<modify-function signature="operator=(const QStorageInfo&amp;)" remove="all"/>
 	</value-type>
 	<object-type name="QLibraryInfo">
 	</object-type>
-	
+
     <suppress-warning text="WARNING(MetaJavaBuilder) :: skipping * unmatched *type 'QAbstractFileEngine::ExtensionOption const\*'"/>
     <suppress-warning text="WARNING(MetaJavaBuilder) :: skipping * unmatched *type 'QAbstractFileEngine::Iterator\*'"/>
 
