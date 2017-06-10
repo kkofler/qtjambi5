@@ -51,7 +51,7 @@ public class QDeclarativeListProperty<T extends QObject> extends org.qtjambi.qt.
 {
 
     static {
-        org.qtjambi.qt.declarative.QtJambi_LibraryInitializer.init();
+        //org.qtjambi.qt.declarative.QtJambi_LibraryInitializer.init();
     }
 
     public QDeclarativeListProperty(){
