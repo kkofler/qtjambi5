@@ -28,10 +28,10 @@ directory that need to be applied.  There are unix and windows flavours, I
 believe they only differ in the line endings.
 
 ```
-~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_global_qnamespace.h.patch
-~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_kernel_qobject.cpp.patch
-~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_thread_qthread_unix.cpp.patch
-~/qt-src-5.5.1> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_thread_qthread_win.cpp.patch
+~/qt-src-5.6.2> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_global_qnamespace.h.patch
+~/qt-src-5.6.2> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_kernel_qobject.cpp.patch
+~/qt-src-5.6.2> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_thread_qthread_unix.cpp.patch
+~/qt-src-5.6.2> git apply --ignore-whitespace ~/qtjambi5/Qt5-patches/win_qtbase_src_corelib_thread_qthread_win.cpp.patch
 ```
 
 Make a build directory outside the qt source directory to avoid polluting the source
@@ -49,7 +49,7 @@ off and rebuilding jambi takes an eternity.  It's not worth the effort.
 Some exploration into other opengl options, like Angle might be worth while.
 
 ```
-~/build-qt-5.5.1> ~/qt-src-5.6.2/configure -opensource -release -nomake tests -nomake examples -opengl dynamic -plugin-manifests -skip qt3d
+~/build-qt-5.6.2> ~/qt-src-5.6.2/configure -opensource -release -nomake tests -nomake examples -opengl dynamic -plugin-manifests -skip qt3d
 ```
     
 Build and install.  Note, the install step is super important.  There is a lot
