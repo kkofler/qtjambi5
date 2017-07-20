@@ -17,7 +17,7 @@ shortcut to use the qt5vars.cmd; set the 'Target' to
 
 ### Build Qt Sources
 
-Unpack, checkout or whatever the Qt source.  Version 5.5.1 is known to work,
+Unpack, checkout or whatever the Qt source.  Version 5.6.2 is known to work,
 later versions may work as well.  Source distributions can be found at
 http://download.qt.io/archive/qt/.  I would recommend the 
 qt-everywhere-opensource-src-x.x.x.zip archives.  Cpp source files need to be
@@ -38,8 +38,8 @@ Make a build directory outside the qt source directory to avoid polluting the so
 if something goes wrong.
 
 ```
-~/> mkdir build-qt-5.5.1
-~/> cd build-qt-5.5.1
+~/> mkdir build-qt-5.6.2
+~/> cd build-qt-5.6.2
 ```
 
 Configure the build settings.  Skip Qt3D, I couldn't compile it because of a missing
@@ -49,7 +49,7 @@ off and rebuilding jambi takes an eternity.  It's not worth the effort.
 Some exploration into other opengl options, like Angle might be worth while.
 
 ```
-~/build-qt-5.5.1> ~/qt-src-5.5.1/configure -opensource -release -nomake tests -nomake examples -opengl dynamic -plugin-manifests -skip qt3d
+~/build-qt-5.5.1> ~/qt-src-5.6.2/configure -opensource -release -nomake tests -nomake examples -opengl dynamic -plugin-manifests -skip qt3d
 ```
     
 Build and install.  Note, the install step is super important.  There is a lot
@@ -57,8 +57,8 @@ of header monkeying during install and jambi requires them to be setup properly
 to build.
 
 ```
-~/build-qt-5.5.1> nmake
-~/build-qt-5.5.1> nmake install
+~/build-qt-5.6.2> nmake
+~/build-qt-5.6.2> nmake install
 ```
 
 ### Build Jambi
