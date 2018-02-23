@@ -91,7 +91,7 @@ public:
         d_func()->running = true;
         d_func()->finished = false;
 #ifdef Q_OS_UNIX
-        d_func()->data->threadId = pthread_self();
+        d_func()->data->threadId = reinterpret_cast<Qt::HANDLE>(static_cast<intptr_t>(pthread_self()));
 #endif // Q_OS_UNIX
 
 #ifdef Q_OS_WIN
