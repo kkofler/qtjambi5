@@ -75,8 +75,6 @@ import org.qtjambi.qt.Utilities;
 import org.qtjambi.qt.core.QByteArray;
 import org.qtjambi.qt.core.QObject;
 import org.qtjambi.qt.core.Qt;
-import org.qtjambi.qt.declarative.QDeclarativeListProperty;
-import org.qtjambi.qt.qml.QQmlListProperty;
 
 
 /**
