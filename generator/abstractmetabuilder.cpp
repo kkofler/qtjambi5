@@ -51,6 +51,7 @@
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
+#include <QRegularExpression>
 #include <QTextCodec>
 #include <QTextStream>
 #include <QVariant>
@@ -2152,7 +2153,8 @@ AbstractMetaType *AbstractMetaBuilder::translateType(const TypeInfo& type_info,
             //10. Try if the type is in a base class
             //e.g. MimeType is QWebPluginFactory::MimeType and called by QWebPluginFactory::Plugin
             QString base = contexts.at(0);
-            QStringList parts = base.split("::");
+            QStringList parts = base.replace(QRegularExpression(QStringLiteral("<([^>]*)::")), QStringLiteral("<\\1!!")).split("::");
+            parts.replaceInStrings(QStringLiteral("!!"), QStringLiteral("::"));
             while (parts.size() > 1) {
                 parts.removeLast();
                 info.setQualifiedName(QStringList() << parts << name);
@@ -2209,9 +2211,12 @@ AbstractMetaType *AbstractMetaBuilder::translateType(const TypeInfo& type_info,
             //13. Try if the type is in a base class
             //e.g. MimeType is QWebPluginFactory::MimeType and called by QWebPluginFactory::Plugin
             QString base = contexts.at(0);
-            QStringList parts = base.split("::");
+            QStringList parts = base.replace(QRegularExpression(QStringLiteral("<([^>]*)::")), QStringLiteral("<\\1!!")).split("::");
+            parts.replaceInStrings(QStringLiteral("!!"), QStringLiteral("::"));
             while (parts.size() > 1) {
                 parts.removeLast();
+                if (qualified_name.startsWith(parts.join("::") + "::"))
+                    break;
                 info.setQualifiedName(QStringList() << parts << qualified_name);
                 AbstractMetaType *t = translateType(info, &ok, contextString, true, false, prependScope);
                 if (t != 0 && ok) {
