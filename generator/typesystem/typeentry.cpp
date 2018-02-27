@@ -113,7 +113,7 @@ QString ContainerTypeEntry::targetLangName() const {
         case MapContainer: return "SortedMap";
         case MultiMapContainer: return "SortedMap";
         case HashContainer: return "HashMap";
-            //     case MultiHashCollectio: return "MultiHash";
+        case MultiHashContainer: return "HashMap";
         case PairContainer: return "QPair";
         case QDeclarativeListPropertyContainer: return "QDeclarativeListProperty"; // new for QDeclarative module but not yet implemented
         case QQmlListPropertyContainer: return "QQmlListProperty"; // new for QtQml module
