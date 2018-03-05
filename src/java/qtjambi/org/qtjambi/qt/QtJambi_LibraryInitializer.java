@@ -61,15 +61,6 @@ public abstract class QtJambi_LibraryInitializer
     static {
         try {
             Utilities.loadSystemLibraries();
-            if(org.qtjambi.qt.Utilities.isAvailableUtilityLibrary("icudata", "51")){
-        		org.qtjambi.qt.Utilities.loadUtilityLibrary("icudata", "51");
-        	}
-        	if(org.qtjambi.qt.Utilities.isAvailableUtilityLibrary("icuuc", "51")){
-        		org.qtjambi.qt.Utilities.loadUtilityLibrary("icuuc", "51");
-        	}
-        	if(org.qtjambi.qt.Utilities.isAvailableUtilityLibrary("icui18n", "51")){
-        		org.qtjambi.qt.Utilities.loadUtilityLibrary("icui18n", "51");
-        	}
             Utilities.loadQtLibrary("QtCore");
             Utilities.loadJambiJniLibrary("qtjambi");
 
